@@ -17,7 +17,7 @@ fn main() {
 }
 
 fn fill_vec(vec: Vec<i32>) -> Vec<i32> {
-    let mut vec = vec;
+    let mut vec = vec; // 实际上这里新创建了个变量屏蔽了传入的参数
 
     vec.push(22);
     vec.push(44);
