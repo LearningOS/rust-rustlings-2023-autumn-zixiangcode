@@ -7,13 +7,12 @@
 // Execute `rustlings hint modules2` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
 
 mod delicious_snacks {
-    // TODO: Fix these use statements
-    use self::fruits::PEAR as ???
-    use self::veggies::CUCUMBER as ???
-
+    // Fix these use statements
+    pub use self::fruits::PEAR as fruit; // 需要加上 pub 把常量暴露给 main
+    pub use self::veggies::CUCUMBER as veggie;
+    
     mod fruits {
         pub const PEAR: &'static str = "Pear";
         pub const APPLE: &'static str = "Apple";
