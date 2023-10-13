@@ -14,7 +14,6 @@
 // Execute `rustlings hint hashmaps3` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
 
 use std::collections::HashMap;
 
@@ -28,17 +27,34 @@ fn build_scores_table(results: String) -> HashMap<String, Team> {
     // The name of the team is the key and its associated struct is the value.
     let mut scores: HashMap<String, Team> = HashMap::new();
 
-    for r in results.lines() {
-        let v: Vec<&str> = r.split(',').collect();
+    for r in results.lines() { // 传参进来的是几行队伍信息
+        let v: Vec<&str> = r.split(',').collect(); // 对每一行的两个队伍信息做处理，塞到 vector 中
         let team_1_name = v[0].to_string();
         let team_1_score: u8 = v[2].parse().unwrap();
         let team_2_name = v[1].to_string();
         let team_2_score: u8 = v[3].parse().unwrap();
-        // TODO: Populate the scores table with details extracted from the
+        // Populate the scores table with details extracted from the
         // current line. Keep in mind that goals scored by team_1
         // will be the number of goals conceded from team_2, and similarly
         // goals scored by team_2 will be the number of goals conceded by
         // team_1.
+        let team_1_entry = scores.entry(team_1_name).or_insert(Team {
+            goals_scored: 0,
+            goals_conceded: 0,
+        });
+        team_1_entry.goals_scored += team_1_score;
+        team_1_entry.goals_conceded += team_2_score;
+
+        // .entry() 返回的是 Entry 枚举类型，包含两个可能的变体：Occupied 和 Vacant，分别表示已经存在的键和新的键
+        // 需要使用 .or_insert() 或其他方法来进一步处理这个 Entry。
+        // or_insert() 返回值的类型是对应键的【值】类型的可变引用，与 map 中的【值】类型相同
+
+        let team_2_entry = scores.entry(team_2_name).or_insert(Team {
+            goals_scored: 0,
+            goals_conceded: 0,
+        });
+        team_2_entry.goals_scored += team_2_score;
+        team_2_entry.goals_conceded += team_1_score;
     }
     scores
 }
